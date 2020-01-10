@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/home/mateuscosta/sources/horario-vlt-fortaleza/database/vlt_db.db" foreign_keys="1"/><window><current_tab id="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1535"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="stops"/><default_encoding codec=""/><browsetable_info data="AAAAAwAAAAwAcwB0AG8AcABzADIAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAAAAAACAAAAAAAAAAEAAAAAAAAAAAD//////////wAAAAD/////AAAACgBzAHQAbwBwAHMAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////////wAAAAD/////AAAACgBsAGkAbgBlAHMAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////////wAAAAD/////"/></tab_browse><tab_sql><sql name="SQL 3">INSERT INTO stops (name, time,line_id, trip_number, stop_order)
+SELECT  name, CAST(strftime('%s',DATETIME(strftime('%H:%M:%S',datetime(time, 'unixepoch', 'localtime')),'+152 minutes')) AS INT) as time, line_id, trip_number+1 as trip_number, stop_order FROM stops WHERE trip_number = (SELECT MAX(trip_number) from stops)
+</sql><sql name="SQL 9">--SELECT  name, strftime('%H:%M:%S',DATETIME(strftime('%H:%M:%S',datetime(time, 'unixepoch', 'localtime')),'-0 minutes')) as time, line_id, trip_number as trip_number, stop_order FROM stops WHERE trip_number = 1 AND line_id = 1
+
+--SELECT * FROM stops WHERE trip_number =1 
+UPDATE stops set time = CAST(strftime('%s',DATETIME(strftime('%H:%M:%S',datetime(time, 'unixepoch', 'localtime')),'+120 minutes')) AS INT) 
+--WHERE trip_number = 1 AND line_id =1</sql><sql name="SQL 4">SELECT strftime('%H:%M:%S',DATETIME(strftime('%H:%M:%S','now'),'+32 minutes'))</sql><sql name="SQL 7">--SELECT  datetime(1578647760, 'unixepoch', 'localtime')
+SELECT *, strftime('%H:%M:%S',DATETIME(strftime('%H:%M:%S',datetime(time, 'unixepoch', 'localtime')),'+0 minutes')) as time FROM lines INNER JOIN stops ON lines.id = stops.line_id 
+WHERE stop_order = 1  
+--strftime('%H:%M:%S',datetime(time, 'unixepoch', 'localtime')) &gt; strftime('%H:%M:%S',DATETIME(strftime('%H:%M:%S','now'),'-180 minutes')) AND 
+--lines.id = 1
+ORDER BY stops.line_id,stops.trip_number, stops.stop_order
+--SELECT strftime('%H:%M:%S',DATETIME(strftime('%H:%M:%S','now'),'-180 minutes'))</sql><sql name="SQL 10">UPDATE stops set time = time+7200 WHERE trip_number = 1
+
+
+
+--SELECT CAST(strftime('%s',DATETIME(strftime('%H:%M:%S',datetime(time, 'unixepoch', 'localtime')),'+120 minutes')) AS INT) FROM stops
+</sql><current_tab id="3"/></tab_sql></sqlb_project>
